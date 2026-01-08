@@ -34,7 +34,7 @@ public class RegisterRequest {
     private Long zipCode;
 
     @JsonFormat
-    (pattern = "yyyy-MM-dd")
+    (pattern = "dd-mm-yyyy")
     private Date dob;
 
     private String userCategory;

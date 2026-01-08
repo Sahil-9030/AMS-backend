@@ -9,7 +9,7 @@ import com.major.connect.models.UserInfo;
 public interface UserRepository extends JpaRepository<UserInfo, Long>{
 
 	Optional<UserInfo>findByUsername(String username);
-	
+	Optional<UserInfo>findByEmail(String email);
 	boolean existsByUsername(String username);
     boolean existsByEmail(String email);
 }

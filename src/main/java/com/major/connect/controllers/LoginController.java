@@ -8,12 +8,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.major.connect.config.UserInfoUserDetailsService;
+import com.major.connect.dtos.LoginResponse;
 import com.major.connect.dtos.RegisterRequest;
 import com.major.connect.dtos.loginDto;
 import com.major.connect.models.UserInfo;
@@ -22,6 +24,7 @@ import com.major.connect.utils.jwtAuthService;
 
 @RestController
 @RequestMapping("/public")
+@CrossOrigin(origins = "http://localhost:4200")
 public class LoginController {
 	
 	@Autowired
@@ -45,20 +48,20 @@ public class LoginController {
         // 1. Authenticate username & password
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );
 
         // 2. Load user details
         UserDetails userDetails =
-                userDetailsService.loadUserByUsername(request.getUsername());
+                userDetailsService.loadUserByUsername(request.getEmail());
 
         // 3. Generate JWT token
         String token = jwtService.generateToken(userDetails);
 
         // 4. Return token
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new LoginResponse(token, 200));
     }
 	
 	

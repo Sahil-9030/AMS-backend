@@ -12,4 +12,5 @@ import java.util.List;
 public interface CarrierRepository extends JpaRepository<Carrier, Long>{
 	Optional<Carrier>findByCarrierId(long carrierId);
 	List<Carrier> findByCarrierName(String carrierName);
+	boolean deleteByCarrierId(long carrierId);
 }
