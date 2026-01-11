@@ -1,7 +1,10 @@
 package com.major.connect.dtos;
 
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +32,7 @@ public class AddFlightDto {
     @Min(value = 0, message = "Executive seat capacity must be >= 0")
     private int seatCapacityExecutive;
 
+<<<<<<< HEAD
 	 private Long scheduleId;
     private List<Long> bookingIds;
 
@@ -48,6 +52,8 @@ public class AddFlightDto {
         this.bookingIds = bookingIds;
     }
 
+=======
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 	public Long getCarrierId() {
 		return carrierId;
 	}

@@ -1,5 +1,6 @@
 package com.major.connect.services;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,18 +9,26 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.major.connect.dtos.AddFlightDto;
 import com.major.connect.models.Carrier;
 import com.major.connect.models.Flight;
+<<<<<<< HEAD
 import com.major.connect.models.FlightBooking;
 import com.major.connect.models.FlightSchedule;
 import com.major.connect.repositories.CarrierRepository;
 import com.major.connect.repositories.FlightBookingRepository;
 import com.major.connect.repositories.FlightRepository;
 import com.major.connect.repositories.FlightScheduleRepository;
+=======
+import com.major.connect.repositories.CarrierRepository;
+import com.major.connect.repositories.FlightRepository;
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 
 @Service
 public class FlightServiceImpl implements FlightService{
@@ -30,17 +39,21 @@ public class FlightServiceImpl implements FlightService{
 	@Autowired
 	CarrierRepository carrierRepository;
 
+<<<<<<< HEAD
 	@Autowired
 	FlightBookingRepository flightBookingRepository;
 
 	@Autowired
 	FlightScheduleRepository flightScheduleRepository;
 
+=======
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 	@Override
 	public ResponseEntity<Object> addFlight(AddFlightDto dto) {
 		try {
 			Carrier c1 = carrierRepository.findByCarrierId(dto.getCarrierId()).orElseThrow(() -> new IllegalArgumentException("There is No carrier with this carrier id"));
 			
+<<<<<<< HEAD
 			if(c1 == null){
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No carrier");
 			}
@@ -159,6 +172,13 @@ public class FlightServiceImpl implements FlightService{
 
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error while geting flight for this route " + e.getMessage());
+=======
+			Flight f1 = new Flight();
+//			f1.setCarrier(dto.getCarrierId());
+			return null;
+		}catch(Exception e) {
+			return null;
+>>>>>>> 78140cefe7efad44b6a9814f0898869b087fa4af
 		}
 	}
 
