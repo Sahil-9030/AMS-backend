@@ -37,8 +37,9 @@ public class SecurityConfig{
 		http.cors(Customizer.withDefaults());
 		http.authorizeHttpRequests(auth -> 
 							auth.requestMatchers("/public/**").permitAll()
-								.requestMatchers("/auth/customers/**").hasAuthority("CUSTOMER")
-								.requestMatchers("/auth/admin/**").hasAuthority("ADMIN")
+								.requestMatchers("/auth/customers/**").hasAuthority("Customer")
+								.requestMatchers("/auth/admin/**").hasAuthority("Admin")
+//								.requestMatchers("/auth/admin/edit/carrier/**").permitAll()
 								.anyRequest().authenticated());
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

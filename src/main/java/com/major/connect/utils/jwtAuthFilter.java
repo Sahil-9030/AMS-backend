@@ -31,45 +31,60 @@ public class jwtAuthFilter extends OncePerRequestFilter{
 	UserInfoUserDetailsService userDetailsService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
-		
-		String authHeader = request.getHeader("Authorization");
-		
-		System.err.println("working 2");
-		
-		if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-			filterChain.doFilter(request, response);
-			System.err.println("working 3");
-			return;
-		}
-		
-		String token = authHeader.substring(7);
-		
-		String username = jwtAuthService.extractUsername(token);
-		
-		System.err.println("Working till here "+ username);
-		
-		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			
-//			UserDetails user = userDetailsService.loadUserByUsername(username);
-			
-			Claims claims = jwtAuthService.extractAllClaims(token);
-			
-			List<String> role = claims.get("role",List.class);
-			
-			List<SimpleGrantedAuthority> authority = role.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-	
-			System.err.println("Authority -> " + authority);
-			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null, authority);
-			SecurityContextHolder.getContext().setAuthentication(authToken);
-			
-			System.err.println("AuthToken " + authToken);
-			
-		}
-		
-		filterChain.doFilter(request, response);
-		
+	protected void doFilterInternal(
+	        HttpServletRequest request,
+	        HttpServletResponse response,
+	        FilterChain filterChain)
+	        throws ServletException, IOException {
+
+	    String authHeader = request.getHeader("Authorization");
+
+	    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+	        filterChain.doFilter(request, response);
+	        return;
+	    }
+
+	    String token = authHeader.substring(7);
+
+	    try {
+	        String username = jwtAuthService.extractUsername(token);
+
+	        if (username != null &&
+	                SecurityContextHolder.getContext().getAuthentication() == null) {
+
+	            Claims claims = jwtAuthService.extractAllClaims(token);
+
+	            List<String> roles = claims.get("role", List.class);
+
+	            List<GrantedAuthority> authorities =
+	                    roles.stream()
+	                         .map(SimpleGrantedAuthority::new)
+	                         .collect(Collectors.toList());
+
+	            UsernamePasswordAuthenticationToken authToken =
+	                    new UsernamePasswordAuthenticationToken(
+	                            username,
+	                            null,
+	                            authorities
+	                    );
+
+	            SecurityContextHolder.getContext().setAuthentication(authToken);
+	        }
+
+	        filterChain.doFilter(request, response);
+
+	    } catch (io.jsonwebtoken.ExpiredJwtException ex) {
+
+	        // 🔴 THIS IS THE KEY LINE
+	        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	        return;
+
+	    } catch (Exception ex) {
+
+	        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	        return;
+	    }
 	}
+
 
 }

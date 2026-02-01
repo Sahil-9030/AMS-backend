@@ -22,7 +22,7 @@ public class jwtAuthService {
 
 	
 	private final String JWTSECRET = "ThisIsASecretKeyThisIsASecretKeyThisIsASecretKey";
-	private final long VALIDITY = 24*60*60*1000;
+	private final long VALIDITY = 1*60*1000;
 	
 	public String extractUsername(String token) {
 		return extractAllClaims(token).getSubject();

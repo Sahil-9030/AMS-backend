@@ -2,6 +2,7 @@ package com.major.connect.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/auth/admin")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CarrierController {
 	
 	@Autowired
@@ -35,6 +37,7 @@ public class CarrierController {
 
 	@PutMapping("/edit/carrier/{carrierId}")
 	public ResponseEntity<Object> updateCarrier(@PathVariable long carrierId, @RequestBody EditCarrierDto dto) {
+		System.out.print("aai");
 		return carrierServiceImpl.editCarrier(carrierId,dto);
 	}
 
