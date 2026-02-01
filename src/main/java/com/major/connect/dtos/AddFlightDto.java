@@ -33,6 +33,7 @@ public class AddFlightDto {
     @Nullable
 	private Long scheduleId;
     @Nullable
+	 private Long scheduleId;
     private List<Long> bookingIds;
 
 	 public Long getScheduleId() {
