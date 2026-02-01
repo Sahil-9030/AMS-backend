@@ -2,6 +2,7 @@ package com.major.connect.models;
 
 import java.util.List;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,18 +32,10 @@ public class Flight {
 	private int seat_capacity_economy;
 	private int seat_capacity_executive;
 	
-	@OneToOne(mappedBy = "flight", cascade = CascadeType.ALL)
-	private FlightSchedule schedule;
-	
 	@OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
+	@Nullable
 	private List<FlightBooking> bookings;
-	
-	public FlightSchedule getSchedule() {
-		return schedule;
-	}
-	public void setSchedule(FlightSchedule schedule) {
-		this.schedule = schedule;
-	}
+
 	public List<FlightBooking> getBookings() {
 		return bookings;
 	}

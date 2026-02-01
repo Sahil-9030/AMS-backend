@@ -3,10 +3,12 @@ package com.major.connect.models;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -18,9 +20,9 @@ public class FlightSchedule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long flightScheduleId;
 	
-	@OneToOne
-	@JoinColumn(name = "flightId", nullable = false)
-	private Flight flight;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flightId", nullable = false)
+    private Flight flight;
 	
 	private Date dateOfTravel;
 	private int businessClassBookedCount;

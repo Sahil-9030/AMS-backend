@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.major.connect.dtos.AddFlightDto;
+import com.major.connect.dtos.EditFlightRequestDTO;
 import com.major.connect.services.FlightServiceImpl;
 
 import java.util.Date;
@@ -41,9 +42,9 @@ public class FlightController {
 		return flightService.getFlightById(flightId);
 	}
 
-	@PutMapping("/edit/flight/{flightId}")
-	public ResponseEntity<Object> editFlightDetails(@PathVariable long flightId){
-		return flightService.editFlightById(flightId);
+	@PutMapping("/edit/flight")
+	public ResponseEntity<Object> editFlightDetails( @RequestBody EditFlightRequestDTO request){
+		return flightService.editFlightById(request);
 	}
 
 	@DeleteMapping("/delete/flight/{flightId}")
